@@ -51,6 +51,14 @@ def geolocate_ip_1(action=None, success=None, container=None, results=None, hand
 def on_finish(container, summary):
     phantom.debug("on_finish() called")
 
+    geolocate_ip_1_result_data = phantom.collect2(container=container, datapath=["geolocate_ip_1:action_result.summary.city"])
+
+    geolocate_ip_1_summary_city = [item[0] for item in geolocate_ip_1_result_data]
+
+    output = {
+        "hi": geolocate_ip_1_summary_city,
+    }
+
     ################################################################################
     ## Custom Code Start
     ################################################################################
@@ -69,5 +77,7 @@ def on_finish(container, summary):
     ################################################################################
     ## Custom Code End
     ################################################################################
+
+    phantom.save_playbook_output_data(output=output)
 
     return

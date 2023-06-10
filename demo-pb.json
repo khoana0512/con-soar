@@ -21,7 +21,7 @@
                     "targetPort": "1_in"
                 }
             ],
-            "hash": "0a31399b0d00c61bdb7e3524240c3469dbd5c9e5",
+            "hash": "6460d0dde7a765445f89a2df785311fcdf07cf79",
             "nodes": {
                 "0": {
                     "data": {
@@ -36,7 +36,7 @@
                     "id": "0",
                     "type": "start",
                     "x": 1000,
-                    "y": 419.9999999999999
+                    "y": 419.9999999999998
                 },
                 "1": {
                     "data": {
@@ -92,13 +92,26 @@
             "notes": ""
         },
         "input_spec": null,
-        "output_spec": null,
+        "output_spec": [
+            {
+                "contains": [
+                    "host name"
+                ],
+                "datapaths": [
+                    "geolocate_ip_1:action_result.summary.city"
+                ],
+                "deduplicate": false,
+                "description": "hello",
+                "metadata": {},
+                "name": "hi"
+            }
+        ],
         "playbook_type": "automation",
         "python_version": "3",
         "schema": "5.0.6",
         "version": "5.3.2.88192"
     },
-    "create_time": "2023-06-09T10:53:58.104377+00:00",
+    "create_time": "2023-06-10T04:53:47.218285+00:00",
     "draft_mode": false,
     "labels": [
         "*"
