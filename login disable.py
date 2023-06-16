@@ -21,7 +21,7 @@ def login_disable(action=None, success=None, container=None, results=None, handl
 
     # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
 
-    container_artifact_data = phantom.collect2(container=container, datapath=["artifact:*.cef.destinationUserName","artifact:*.id"])
+    container_artifact_data = phantom.collect2(container=container, datapath=["artifact:*.cef.duser","artifact:*.id"])
 
     parameters = []
 
