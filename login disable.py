@@ -30,7 +30,6 @@ def login_disable(action=None, success=None, container=None, results=None, handl
         if container_artifact_item[0] is not None:
             parameters.append({
                 "user": container_artifact_item[0],
-                "use_samaccountname": True,
                 "context": {'artifact_id': container_artifact_item[1]},
             })
 
@@ -44,7 +43,7 @@ def login_disable(action=None, success=None, container=None, results=None, handl
     ## Custom Code End
     ################################################################################
 
-    phantom.act("disable account", parameters=parameters, name="login_disable", assets=["adldap"])
+    phantom.act("disable account", parameters=parameters, name="login_disable", assets=["adldap-defenders"])
 
     return
 
