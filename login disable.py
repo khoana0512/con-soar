@@ -30,6 +30,7 @@ def login_disable(action=None, success=None, container=None, results=None, handl
         if container_artifact_item[0] is not None:
             parameters.append({
                 "user": container_artifact_item[0],
+                "use_samaccountname": True,
                 "context": {'artifact_id': container_artifact_item[1]},
             })
 

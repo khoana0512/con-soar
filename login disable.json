@@ -21,7 +21,7 @@
                     "targetPort": "1_in"
                 }
             ],
-            "hash": "2354fd6e4ac0de296ed0d1f5fae797598b86976b",
+            "hash": "4617ae79e72473fd97fac46fcd0639c675d5079a",
             "nodes": {
                 "0": {
                     "data": {
@@ -74,6 +74,7 @@
                         "functionName": "login_disable",
                         "id": "2",
                         "parameters": {
+                            "use_samaccountname": true,
                             "user": "artifact:*.cef.destinationUserName"
                         },
                         "requiredParameters": [
@@ -110,7 +111,7 @@
         "schema": "5.0.6",
         "version": "5.3.2.88192"
     },
-    "create_time": "2023-06-19T07:28:10.062155+00:00",
+    "create_time": "2023-06-19T07:44:29.570634+00:00",
     "draft_mode": false,
     "labels": [
         "*"
