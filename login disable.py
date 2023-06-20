@@ -66,7 +66,8 @@ def on_finish(container, summary):
             # if 'action_run_id' in action_result:
                 # action_results = phantom.get_action_results(action_run_id=action_result['action_run_id'], result_data=False, flatten=False)
                 # phantom.debug(action_results)
-
+    sums = phantom.get_summary()
+    print(sums)
     ################################################################################
     ## Custom Code End
     ################################################################################
