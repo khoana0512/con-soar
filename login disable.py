@@ -39,6 +39,7 @@ def login_disable(action=None, success=None, container=None, results=None, handl
     ################################################################################
 
     # Write your custom code here...
+    print(container_artifact_item)
 
     ################################################################################
     ## Custom Code End
@@ -66,8 +67,6 @@ def on_finish(container, summary):
             # if 'action_run_id' in action_result:
                 # action_results = phantom.get_action_results(action_run_id=action_result['action_run_id'], result_data=False, flatten=False)
                 # phantom.debug(action_results)
-    sums = phantom.get_summary()
-    print(sums)
     ################################################################################
     ## Custom Code End
     ################################################################################
