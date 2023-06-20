@@ -39,7 +39,6 @@ def login_disable(action=None, success=None, container=None, results=None, handl
     ################################################################################
 
     # Write your custom code here...
-    print(container_artifact_item)
 
     ################################################################################
     ## Custom Code End
