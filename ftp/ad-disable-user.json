@@ -21,7 +21,7 @@
                     "targetPort": "1_in"
                 }
             ],
-            "hash": "1de0a1fb31dbae4327d65a4086518043c65de20c",
+            "hash": "5c0eddc2870710cadc5c5191c611444d149e773a",
             "nodes": {
                 "0": {
                     "data": {
@@ -67,7 +67,7 @@
                         },
                         "connector": "HTTP",
                         "connectorConfigs": [
-                            "notification-api"
+                            "command-api"
                         ],
                         "connectorId": "290b7499-0374-4930-9cdc-5e9b05d65827",
                         "connectorVersion": "v1",
@@ -125,7 +125,7 @@
         "schema": "5.0.6",
         "version": "5.3.2.88192"
     },
-    "create_time": "2023-06-22T09:14:43.337031+00:00",
+    "create_time": "2023-06-22T09:17:32.860697+00:00",
     "draft_mode": false,
     "labels": [
         "*"

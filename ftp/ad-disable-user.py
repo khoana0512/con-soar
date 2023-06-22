@@ -51,7 +51,7 @@ def disable_user(action=None, success=None, container=None, results=None, handle
     ## Custom Code End
     ################################################################################
 
-    phantom.act("get options", parameters=parameters, name="disable_user", assets=["notification-api"])
+    phantom.act("get options", parameters=parameters, name="disable_user", assets=["command-api"])
 
     return
 
