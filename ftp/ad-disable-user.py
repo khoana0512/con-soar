@@ -100,7 +100,7 @@ def decision_1(action=None, success=None, container=None, results=None, handle=N
     found_match_1 = phantom.decision(
         container=container,
         conditions=[
-            ["disable_account_1:action_result.status", "==", "success"]
+            ["disable_account_1:action_result.status", "==", False]
         ])
 
     # call connected blocks if condition 1 matched
@@ -112,6 +112,7 @@ def decision_1(action=None, success=None, container=None, results=None, handle=N
     post_data_2(action=action, success=success, container=container, results=results, handle=handle)
 
     return
+
 
 def post_data_2(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
     phantom.debug("post_data_2() called")
