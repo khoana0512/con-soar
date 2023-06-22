@@ -59,7 +59,7 @@
                     "targetPort": "1_in"
                 }
             ],
-            "hash": "144ff9ab279923062abbe2df80c6f255acfb708a",
+            "hash": "0e970297f4b7d54c5dda3727e50e94b611388a39",
             "nodes": {
                 "0": {
                     "data": {
@@ -90,7 +90,7 @@
                     "id": "1",
                     "type": "end",
                     "userCode": "\n    # This function is called after all actions are completed.\n    # summary of all the action and/or all details of actions\n    # can be collected here.\n\n    # summary_json = phantom.get_summary()\n    # if 'result' in summary_json:\n        # for action_result in summary_json['result']:\n            # if 'action_run_id' in action_result:\n                # action_results = phantom.get_action_results(action_run_id=action_result['action_run_id'], result_data=False, flatten=False)\n                # phantom.debug(action_results)\n\n",
-                    "x": 1000,
+                    "x": 1020,
                     "y": 1020
                 },
                 "4": {
@@ -116,12 +116,8 @@
                         "id": "4",
                         "parameters": {
                             "body": {
-                                "functionId": 1,
-                                "parameters": [
-                                    "artifact:*.cef.deviceCustomString1",
-                                    "artifact:*.cef.destinationUserName"
-                                ],
-                                "template": "{\n  \"user\": {1},\n  \"host\": {0},\n  \"status\": 0,\n  \"description\": \"string\"\n}\n"
+                                "parameters": [],
+                                "template": "{\n  \"user\": \"s\",\n  \"host\": \"f\",\n  \"status\": 0,\n  \"description\": \"string\"\n}\n"
                             },
                             "headers": {
                                 "functionId": 1,
@@ -129,9 +125,10 @@
                                 "template": "{\n\"Content-Type\": \"application/json\",\n\"accept\":\"application/json\"\n}"
                             },
                             "location": {
-                                "functionId": 1,
-                                "parameters": [],
-                                "template": "/alert"
+                                "parameters": [
+                                    "artifact:*.cef.destinationUserName"
+                                ],
+                                "template": "/alert{0}\n"
                             }
                         },
                         "requiredParameters": [
@@ -299,13 +296,22 @@
             "notes": ""
         },
         "input_spec": null,
-        "output_spec": null,
+        "output_spec": [
+            {
+                "contains": [],
+                "datapaths": [],
+                "deduplicate": false,
+                "description": "",
+                "metadata": {},
+                "name": ""
+            }
+        ],
         "playbook_type": "automation",
         "python_version": "3",
         "schema": "5.0.6",
         "version": "5.3.2.88192"
     },
-    "create_time": "2023-06-22T08:36:36.012648+00:00",
+    "create_time": "2023-06-22T08:41:44.571828+00:00",
     "draft_mode": false,
     "labels": [
         "*"
