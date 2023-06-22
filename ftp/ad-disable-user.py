@@ -11,29 +11,36 @@ from datetime import datetime, timedelta
 def on_start(container):
     phantom.debug('on_start() called')
 
-    # call 'disable_account' block
-    disable_account(container=container)
+    # call 'post_data_1' block
+    post_data_1(container=container)
 
     return
 
-def send_message_msteam(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
-    phantom.debug("send_message_msteam() called")
+def post_data_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
+    phantom.debug("post_data_1() called")
 
     # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
-
+    container_artifact_data_userName = phantom.collect2(container=container, datapath=["artifact:*.cef.destinationUserName","artifact:*.id"])
+    container_artifact_data_host = phantom.collect2(container=container, datapath=["artifact:*.cef.deviceCustomString1","artifact:*.id"])
+    
+    body_formatted_string = phantom.format(
+        container=container,
+        template="""{\n  \"user\": \"%s\",\n  \"host\": \"%s\",\n  \"status\": 0,\n  \"description\": \"string\"\n}"""%(container_artifact_data_userName[0][0],container_artifact_data_host[0][0]),
+        parameters=[])
     headers_formatted_string = phantom.format(
         container=container,
         template="""{\n\"Content-Type\": \"application/json\",\n\"accept\":\"application/json\"\n}""",
         parameters=[])
     location_formatted_string = phantom.format(
         container=container,
-        template="""/home""",
+        template="""/alert""",
         parameters=[])
 
     parameters = []
 
-    if location_formatted_string is not None:
+    if body_formatted_string is not None and location_formatted_string is not None:
         parameters.append({
+            "body": body_formatted_string,
             "headers": headers_formatted_string,
             "location": location_formatted_string,
             "verify_certificate": False,
@@ -49,43 +56,9 @@ def send_message_msteam(action=None, success=None, container=None, results=None,
     ## Custom Code End
     ################################################################################
 
-    phantom.act("get data", parameters=parameters, name="send_message_msteam", assets=["notification-api"])
+    phantom.act("post data", parameters=parameters, name="post_data_1", assets=["notification-api"])
 
     return
-
-
-def disable_account(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
-    phantom.debug("disable_account() called")
-
-    # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
-
-    container_artifact_data = phantom.collect2(container=container, datapath=["artifact:*.cef.destinationUserName","artifact:*.id"])
-
-    parameters = []
-
-    # build parameters list for 'disable_account' call
-    for container_artifact_item in container_artifact_data:
-        if container_artifact_item[0] is not None:
-            parameters.append({
-                "user": container_artifact_item[0],
-                "use_samaccountname": True,
-                "context": {'artifact_id': container_artifact_item[1]},
-            })
-
-    ################################################################################
-    ## Custom Code Start
-    ################################################################################
-
-    # Write your custom code here...
-
-    ################################################################################
-    ## Custom Code End
-    ################################################################################
-
-    phantom.act("disable account", parameters=parameters, name="disable_account", assets=["adldap-defenders"], callback=send_message_msteam)
-
-    return
-
 
 def on_finish(container, summary):
     phantom.debug("on_finish() called")
