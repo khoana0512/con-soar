@@ -11,7 +11,8 @@ from datetime import datetime, timedelta
 def on_start(container):
     phantom.debug('on_start() called')
 
-
+    # call 'disable_user' block
+    disable_user(container=container)
 
     return
 
