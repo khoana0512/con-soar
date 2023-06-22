@@ -11,23 +11,23 @@ from datetime import datetime, timedelta
 def on_start(container):
     phantom.debug('on_start() called')
 
-    # call 'disable_user' block
-    disable_user(container=container)
+    # call 'call_api_disable_user' block
+    call_api_disable_user(container=container)
 
     return
 
-def disable_user(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
-    phantom.debug("disable_user() called")
+def call_api_disable_user(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
+    phantom.debug("call_api_disable_user() called")
 
     # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
 
     headers_formatted_string = phantom.format(
         container=container,
-        template="""{\n\"Content-Type\": \"application/json\",\n\"accept\":\"application/json\"\n}""",
+        template="""{\n\"accept\": \"application/json\"\n}""",
         parameters=[])
     location_formatted_string = phantom.format(
         container=container,
-        template="""/disable-user/{0}{0}""",
+        template="""/disable-user/{0}""",
         parameters=[
             "artifact:*.cef.destinationUserName"
         ])
@@ -51,7 +51,7 @@ def disable_user(action=None, success=None, container=None, results=None, handle
     ## Custom Code End
     ################################################################################
 
-    phantom.act("get data", parameters=parameters, name="disable_user", assets=["command-api"])
+    phantom.act("get data", parameters=parameters, name="call_api_disable_user", assets=["notification-api"])
 
     return
 

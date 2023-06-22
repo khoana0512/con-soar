@@ -7,21 +7,21 @@
             "description": "",
             "edges": [
                 {
-                    "id": "port_0_to_port_11",
+                    "id": "port_0_to_port_13",
                     "sourceNode": "0",
                     "sourcePort": "0_out",
-                    "targetNode": "11",
-                    "targetPort": "11_in"
+                    "targetNode": "13",
+                    "targetPort": "13_in"
                 },
                 {
-                    "id": "port_11_to_port_1",
-                    "sourceNode": "11",
-                    "sourcePort": "11_out",
+                    "id": "port_13_to_port_1",
+                    "sourceNode": "13",
+                    "sourcePort": "13_out",
                     "targetNode": "1",
                     "targetPort": "1_in"
                 }
             ],
-            "hash": "83612392443986774b444299fce1f384a5a5a94f",
+            "hash": "bd53c294d6f1005f70f68eea14502e1881dba9e3",
             "nodes": {
                 "0": {
                     "data": {
@@ -35,8 +35,8 @@
                     "errors": {},
                     "id": "0",
                     "type": "start",
-                    "x": 1000,
-                    "y": 419.99999999999943
+                    "x": 1020,
+                    "y": 340
                 },
                 "1": {
                     "data": {
@@ -52,39 +52,39 @@
                     "id": "1",
                     "type": "end",
                     "userCode": "\n    # This function is called after all actions are completed.\n    # summary of all the action and/or all details of actions\n    # can be collected here.\n\n    # summary_json = phantom.get_summary()\n    # if 'result' in summary_json:\n        # for action_result in summary_json['result']:\n            # if 'action_run_id' in action_result:\n                # action_results = phantom.get_action_results(action_run_id=action_result['action_run_id'], result_data=False, flatten=False)\n                # phantom.debug(action_results)\n\n",
-                    "x": 1000,
-                    "y": 720
+                    "x": 1020,
+                    "y": 580
                 },
-                "11": {
+                "13": {
                     "data": {
                         "action": "get data",
                         "actionType": "investigate",
                         "advanced": {
-                            "customName": "Disable User",
+                            "customName": "Call API Disable User",
                             "customNameId": 0,
                             "join": []
                         },
                         "connector": "HTTP",
                         "connectorConfigs": [
-                            "command-api"
+                            "notification-api"
                         ],
                         "connectorId": "290b7499-0374-4930-9cdc-5e9b05d65827",
                         "connectorVersion": "v1",
                         "functionId": 1,
-                        "functionName": "disable_user",
-                        "id": "11",
+                        "functionName": "call_api_disable_user",
+                        "id": "13",
                         "parameters": {
                             "headers": {
                                 "functionId": 1,
                                 "parameters": [],
-                                "template": "{\n\"Content-Type\": \"application/json\",\n\"accept\":\"application/json\"\n}"
+                                "template": "{\n\"accept\": \"application/json\"\n}"
                             },
                             "location": {
                                 "functionId": 1,
                                 "parameters": [
                                     "artifact:*.cef.destinationUserName"
                                 ],
-                                "template": "/disable-user/{0}{0}"
+                                "template": "/disable-user/{0}"
                             }
                         },
                         "requiredParameters": [
@@ -100,10 +100,10 @@
                         "type": "action"
                     },
                     "errors": {},
-                    "id": "11",
+                    "id": "13",
                     "type": "action",
-                    "x": 980,
-                    "y": 560
+                    "x": 1000,
+                    "y": 460
                 }
             },
             "notes": ""
@@ -124,7 +124,7 @@
         "schema": "5.0.6",
         "version": "5.3.2.88192"
     },
-    "create_time": "2023-06-22T09:23:07.371342+00:00",
+    "create_time": "2023-06-22T11:15:45.161942+00:00",
     "draft_mode": false,
     "labels": [
         "*"
