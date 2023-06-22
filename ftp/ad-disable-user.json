@@ -59,7 +59,7 @@
                     "targetPort": "1_in"
                 }
             ],
-            "hash": "07a777cb9c55065a3e9d0219801d1e3e5b6e3cc8",
+            "hash": "ee0a8779f2819f5bc0b901af5740179847fcd632",
             "nodes": {
                 "0": {
                     "data": {
@@ -116,9 +116,11 @@
                         "id": "4",
                         "parameters": {
                             "body": {
-                                "functionId": 1,
-                                "parameters": [],
-                                "template": "{\n  \"user\": \"s\",\n  \"host\": \"f\",\n  \"status\": 0,\n  \"description\": \"string\"\n}\n"
+                                "parameters": [
+                                    "artifact:*.cef.destinationUserName",
+                                    "artifact:*.cef.deviceCustomString1"
+                                ],
+                                "template": "{\n  \"user\": \"{0}\",\n  \"host\": \"{1}\",\n  \"status\": 0,\n  \"description\": \"string\"\n}"
                             },
                             "headers": {
                                 "functionId": 1,
@@ -126,11 +128,8 @@
                                 "template": "{\n\"Content-Type\": \"application/json\",\n\"accept\":\"application/json\"\n}"
                             },
                             "location": {
-                                "functionId": 1,
-                                "parameters": [
-                                    "artifact:*.cef.destinationUserName"
-                                ],
-                                "template": "/alert\"{0}\"\n"
+                                "parameters": [],
+                                "template": "/alert"
                             }
                         },
                         "requiredParameters": [
@@ -313,7 +312,7 @@
         "schema": "5.0.6",
         "version": "5.3.2.88192"
     },
-    "create_time": "2023-06-22T08:49:00.256851+00:00",
+    "create_time": "2023-06-22T08:51:10.038976+00:00",
     "draft_mode": false,
     "labels": [
         "*"

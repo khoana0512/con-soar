@@ -23,18 +23,19 @@ def call_api(action=None, success=None, container=None, results=None, handle=Non
 
     body_formatted_string = phantom.format(
         container=container,
-        template="""{\n  \"user\": \"s\",\n  \"host\": \"f\",\n  \"status\": 0,\n  \"description\": \"string\"\n}\n""",
-        parameters=[])
+        template="""{\n  \"user\": \"{0}\",\n  \"host\": \"{1}\",\n  \"status\": 0,\n  \"description\": \"string\"\n}""",
+        parameters=[
+            "artifact:*.cef.destinationUserName",
+            "artifact:*.cef.deviceCustomString1"
+        ])
     headers_formatted_string = phantom.format(
         container=container,
         template="""{\n\"Content-Type\": \"application/json\",\n\"accept\":\"application/json\"\n}""",
         parameters=[])
     location_formatted_string = phantom.format(
         container=container,
-        template="""/alert\"{0}\"\n""",
-        parameters=[
-            "artifact:*.cef.destinationUserName"
-        ])
+        template="""/alert""",
+        parameters=[])
 
     parameters = []
 
