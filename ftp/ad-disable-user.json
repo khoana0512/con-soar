@@ -59,7 +59,7 @@
                     "targetPort": "1_in"
                 }
             ],
-            "hash": "d5e5494d71cdd279d0f22cdb0eae84967e4e95ff",
+            "hash": "201cc55d502fad26801c79dee854622b888783e8",
             "nodes": {
                 "0": {
                     "data": {
@@ -150,6 +150,7 @@
                     "y": 840
                 },
                 "5": {
+                    "customCode": null,
                     "data": {
                         "action": "disable account",
                         "actionType": "generic",
@@ -167,7 +168,7 @@
                         "id": "5",
                         "parameters": {
                             "use_samaccountname": true,
-                            "user": "artifact:*.cef.destinationUserName"
+                            "user": "artifact:*.cef.destinationUserNamed"
                         },
                         "requiredParameters": [
                             {
@@ -181,6 +182,7 @@
                     "errors": {},
                     "id": "5",
                     "type": "action",
+                    "userCode": null,
                     "x": 980,
                     "y": 560
                 },
@@ -197,7 +199,7 @@
                                         "conditionIndex": 0,
                                         "op": "==",
                                         "param": "disable_account_1:action_result.status",
-                                        "value": "false"
+                                        "value": "success"
                                     }
                                 ],
                                 "conditionIndex": 0,
@@ -295,7 +297,7 @@
         "schema": "5.0.6",
         "version": "5.3.2.88192"
     },
-    "create_time": "2023-06-22T08:29:04.230969+00:00",
+    "create_time": "2023-06-22T08:30:11.998659+00:00",
     "draft_mode": false,
     "labels": [
         "*"
