@@ -16,17 +16,18 @@ def on_start(container):
 
     return
 
-def post_data_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
-    phantom.debug("post_data_1() called")
+def call_api(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
+    phantom.debug("call_api() called")
 
     # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
-    container_artifact_data_userName = phantom.collect2(container=container, datapath=["artifact:*.cef.destinationUserName","artifact:*.id"])
-    container_artifact_data_host = phantom.collect2(container=container, datapath=["artifact:*.cef.deviceCustomString1","artifact:*.id"])
-    
+
     body_formatted_string = phantom.format(
         container=container,
-        template="""{\n  \"user\": \"%s\",\n  \"host\": \"%s\",\n  \"status\": 0,\n  \"description\": \"string\"\n}"""%(container_artifact_data_userName[0][0],container_artifact_data_host[0][0]),
-        parameters=[])
+        template="""{\n  \"user\": \"{1}\",\n  \"host\": \"{0}\",\n  \"status\": 0,\n  \"description\": \"string\"\n}\n""",
+        parameters=[
+            "artifact:*.cef.deviceCustomString1",
+            "artifact:*.cef.destinationUserName"
+        ])
     headers_formatted_string = phantom.format(
         container=container,
         template="""{\n\"Content-Type\": \"application/json\",\n\"accept\":\"application/json\"\n}""",
@@ -56,16 +57,17 @@ def post_data_1(action=None, success=None, container=None, results=None, handle=
     ## Custom Code End
     ################################################################################
 
-    phantom.act("post data", parameters=parameters, name="post_data_1", assets=["notification-api"])
+    phantom.act("post data", parameters=parameters, name="call_api", assets=["notification-api"])
 
     return
+
 
 def disable_account_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
     phantom.debug("disable_account_1() called")
 
     # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
 
-    container_artifact_data = phantom.collect2(container=container, datapath=["artifact:*.cef.destinationUserNamed","artifact:*.id"])
+    container_artifact_data = phantom.collect2(container=container, datapath=["artifact:*.cef.destinationUserName","artifact:*.id"])
 
     parameters = []
 
@@ -105,7 +107,7 @@ def decision_1(action=None, success=None, container=None, results=None, handle=N
 
     # call connected blocks if condition 1 matched
     if found_match_1:
-        post_data_1(action=action, success=success, container=container, results=results, handle=handle)
+        call_api(action=action, success=success, container=container, results=results, handle=handle)
         return
 
     # check for 'else' condition 2
