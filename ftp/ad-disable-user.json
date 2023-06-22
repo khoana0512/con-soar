@@ -21,7 +21,7 @@
                     "targetPort": "1_in"
                 }
             ],
-            "hash": "00678582b8c9613af68777372016038d32e9df9d",
+            "hash": "752997d9036917160948dbb341bf7fad0173d2b1",
             "nodes": {
                 "0": {
                     "data": {
@@ -53,7 +53,7 @@
                     "type": "end",
                     "userCode": "\n    # This function is called after all actions are completed.\n    # summary of all the action and/or all details of actions\n    # can be collected here.\n\n    # summary_json = phantom.get_summary()\n    # if 'result' in summary_json:\n        # for action_result in summary_json['result']:\n            # if 'action_run_id' in action_result:\n                # action_results = phantom.get_action_results(action_run_id=action_result['action_run_id'], result_data=False, flatten=False)\n                # phantom.debug(action_results)\n\n",
                     "x": 1000,
-                    "y": 620
+                    "y": 660
                 },
                 "4": {
                     "customCode": "def post_data_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug(\"post_data_1() called\")\n\n    # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    container_artifact_data_userName = phantom.collect2(container=container, datapath=[\"artifact:*.cef.destinationUserName\",\"artifact:*.id\"])\n    container_artifact_data_host = phantom.collect2(container=container, datapath=[\"artifact:*.cef.deviceCustomString1\",\"artifact:*.id\"])\n    \n    body_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"{\\n  \\\"user\\\": \\\"%s\\\",\\n  \\\"host\\\": \\\"%s\\\",\\n  \\\"status\\\": 0,\\n  \\\"description\\\": \\\"string\\\"\\n}\"\"\"%(container_artifact_data_userName[0][0],container_artifact_data_host[0][0]),\n        parameters=[])\n    headers_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"{\\n\\\"Content-Type\\\": \\\"application/json\\\",\\n\\\"accept\\\":\\\"application/json\\\"\\n}\"\"\",\n        parameters=[])\n    location_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"/alert\"\"\",\n        parameters=[])\n\n    parameters = []\n\n    if body_formatted_string is not None and location_formatted_string is not None:\n        parameters.append({\n            \"body\": body_formatted_string,\n            \"headers\": headers_formatted_string,\n            \"location\": location_formatted_string,\n            \"verify_certificate\": False,\n        })\n\n    ################################################################################\n    ## Custom Code Start\n    ################################################################################\n\n    # Write your custom code here...\n\n    ################################################################################\n    ## Custom Code End\n    ################################################################################\n\n    phantom.act(\"post data\", parameters=parameters, name=\"post_data_1\", assets=[\"notification-api\"])\n\n    return",
@@ -108,8 +108,8 @@
                     "errors": {},
                     "id": "4",
                     "type": "action",
-                    "x": 976,
-                    "y": 531.6000366210938
+                    "x": 980,
+                    "y": 540
                 }
             },
             "notes": ""
