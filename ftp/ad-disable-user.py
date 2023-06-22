@@ -31,7 +31,7 @@ def call_api(action=None, success=None, container=None, results=None, handle=Non
         parameters=[])
     location_formatted_string = phantom.format(
         container=container,
-        template="""/alert{0}\n""",
+        template="""/alert\"{0}\"\n""",
         parameters=[
             "artifact:*.cef.destinationUserName"
         ])
