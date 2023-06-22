@@ -11,8 +11,7 @@ from datetime import datetime, timedelta
 def on_start(container):
     phantom.debug('on_start() called')
 
-    # call 'disable_user' block
-    disable_user(container=container)
+
 
     return
 
@@ -23,11 +22,11 @@ def disable_user(action=None, success=None, container=None, results=None, handle
 
     headers_formatted_string = phantom.format(
         container=container,
-        template="""{\n\"accept\": \"application/json\"\n}""",
+        template="""{\n\"Content-Type\": \"application/json\",\n\"accept\":\"application/json\"\n}""",
         parameters=[])
     location_formatted_string = phantom.format(
         container=container,
-        template="""/disable-user/{0}""",
+        template="""/disable-user/{0}{0}""",
         parameters=[
             "artifact:*.cef.destinationUserName"
         ])
@@ -51,7 +50,7 @@ def disable_user(action=None, success=None, container=None, results=None, handle
     ## Custom Code End
     ################################################################################
 
-    phantom.act("get options", parameters=parameters, name="disable_user", assets=["command-api"])
+    phantom.act("get data", parameters=parameters, name="disable_user", assets=["command-api"])
 
     return
 

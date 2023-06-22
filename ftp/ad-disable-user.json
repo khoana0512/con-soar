@@ -5,23 +5,8 @@
     "coa": {
         "data": {
             "description": "",
-            "edges": [
-                {
-                    "id": "port_0_to_port_10",
-                    "sourceNode": "0",
-                    "sourcePort": "0_out",
-                    "targetNode": "10",
-                    "targetPort": "10_in"
-                },
-                {
-                    "id": "port_10_to_port_1",
-                    "sourceNode": "10",
-                    "sourcePort": "10_out",
-                    "targetNode": "1",
-                    "targetPort": "1_in"
-                }
-            ],
-            "hash": "e7e8781aaa9f46abe45a8b4e5f3062e3b38c49d4",
+            "edges": [],
+            "hash": "4d71b8e950700a3fc9cbc77112ded149ef1971d6",
             "nodes": {
                 "0": {
                     "data": {
@@ -36,7 +21,7 @@
                     "id": "0",
                     "type": "start",
                     "x": 1000,
-                    "y": 419.99999999999955
+                    "y": 419.99999999999943
                 },
                 "1": {
                     "data": {
@@ -55,15 +40,14 @@
                     "x": 1000,
                     "y": 720
                 },
-                "10": {
+                "11": {
                     "data": {
-                        "action": "get options",
+                        "action": "get data",
                         "actionType": "investigate",
                         "advanced": {
-                            "customName": "disable user",
+                            "customName": "Disable User",
                             "customNameId": 0,
-                            "join": [],
-                            "reviewer": ""
+                            "join": []
                         },
                         "connector": "HTTP",
                         "connectorConfigs": [
@@ -73,19 +57,19 @@
                         "connectorVersion": "v1",
                         "functionId": 1,
                         "functionName": "disable_user",
-                        "id": "10",
+                        "id": "11",
                         "parameters": {
                             "headers": {
                                 "functionId": 1,
                                 "parameters": [],
-                                "template": "{\n\"accept\": \"application/json\"\n}"
+                                "template": "{\n\"Content-Type\": \"application/json\",\n\"accept\":\"application/json\"\n}"
                             },
                             "location": {
                                 "functionId": 1,
                                 "parameters": [
                                     "artifact:*.cef.destinationUserName"
                                 ],
-                                "template": "/disable-user/{0}"
+                                "template": "/disable-user/{0}{0}"
                             }
                         },
                         "requiredParameters": [
@@ -101,10 +85,10 @@
                         "type": "action"
                     },
                     "errors": {},
-                    "id": "10",
+                    "id": "11",
                     "type": "action",
-                    "x": 980,
-                    "y": 560
+                    "x": 1019.599853515625,
+                    "y": 567.4000244140625
                 }
             },
             "notes": ""
@@ -125,7 +109,7 @@
         "schema": "5.0.6",
         "version": "5.3.2.88192"
     },
-    "create_time": "2023-06-22T09:20:20.676497+00:00",
+    "create_time": "2023-06-22T09:22:56.887014+00:00",
     "draft_mode": false,
     "labels": [
         "*"
