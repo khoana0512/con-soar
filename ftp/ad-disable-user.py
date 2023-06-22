@@ -23,7 +23,7 @@ def disable_user(action=None, success=None, container=None, results=None, handle
 
     headers_formatted_string = phantom.format(
         container=container,
-        template="""{\n\"Content-Type\": \"application/json\",\n\"accept\":\"application/json\"\n}""",
+        template="""{\n\"accept\": \"application/json\"\n}""",
         parameters=[])
     location_formatted_string = phantom.format(
         container=container,
