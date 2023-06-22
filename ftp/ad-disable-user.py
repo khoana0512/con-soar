@@ -11,8 +11,8 @@ from datetime import datetime, timedelta
 def on_start(container):
     phantom.debug('on_start() called')
 
-    # call 'post_data_1' block
-    post_data_1(container=container)
+    # call 'disable_account_1' block
+    disable_account_1(container=container)
 
     return
 
@@ -59,6 +59,39 @@ def post_data_1(action=None, success=None, container=None, results=None, handle=
     phantom.act("post data", parameters=parameters, name="post_data_1", assets=["notification-api"])
 
     return
+
+def disable_account_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
+    phantom.debug("disable_account_1() called")
+
+    # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
+
+    container_artifact_data = phantom.collect2(container=container, datapath=["artifact:*.cef.destinationUserName","artifact:*.id"])
+
+    parameters = []
+
+    # build parameters list for 'disable_account_1' call
+    for container_artifact_item in container_artifact_data:
+        if container_artifact_item[0] is not None:
+            parameters.append({
+                "user": container_artifact_item[0],
+                "use_samaccountname": True,
+                "context": {'artifact_id': container_artifact_item[1]},
+            })
+
+    ################################################################################
+    ## Custom Code Start
+    ################################################################################
+
+    # Write your custom code here...
+
+    ################################################################################
+    ## Custom Code End
+    ################################################################################
+
+    phantom.act("disable account", parameters=parameters, name="disable_account_1", assets=["adldap-defenders"], callback=post_data_1)
+
+    return
+
 
 def on_finish(container, summary):
     phantom.debug("on_finish() called")
