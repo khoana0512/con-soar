@@ -59,7 +59,7 @@
                     "targetPort": "1_in"
                 }
             ],
-            "hash": "ee0a8779f2819f5bc0b901af5740179847fcd632",
+            "hash": "cb15347fb7a8487b2aca0eb4b728a69c4d22b6fb",
             "nodes": {
                 "0": {
                     "data": {
@@ -94,7 +94,7 @@
                     "y": 1020
                 },
                 "4": {
-                    "customCode": null,
+                    "customCode": "def call_api(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug(\"call_api() called\")\n\n    # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    container_artifact_data_userName = phantom.collect2(container=container, datapath=[\"artifact:*.cef.destinationUserName\",\"artifact:*.id\"])\n    container_artifact_data_host = phantom.collect2(container=container, datapath=[\"artifact:*.cef.deviceCustomString1\",\"artifact:*.id\"])\n    body_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"{\\n  \\\"user\\\": \\\"%s\\\",\\n  \\\"host\\\": \\\"%s\\\",\\n  \\\"status\\\": 0,\\n  \\\"description\\\": \\\"string\\\"\\n}\"\"\"%(container_artifact_data_userName[0][0],container_artifact_data_host[0][0]),\n        parameters=[\n            \"artifact:*.cef.destinationUserName\",\n            \"artifact:*.cef.deviceCustomString1\"\n        ])\n    headers_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"{\\n\\\"Content-Type\\\": \\\"application/json\\\",\\n\\\"accept\\\":\\\"application/json\\\"\\n}\"\"\",\n        parameters=[])\n    location_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"/alert\"\"\",\n        parameters=[])\n\n    parameters = []\n\n    if body_formatted_string is not None and location_formatted_string is not None:\n        parameters.append({\n            \"body\": body_formatted_string,\n            \"headers\": headers_formatted_string,\n            \"location\": location_formatted_string,\n            \"verify_certificate\": False,\n        })\n\n    ################################################################################\n    ## Custom Code Start\n    ################################################################################\n\n    # Write your custom code here...\n\n    ################################################################################\n    ## Custom Code End\n    ################################################################################\n\n    phantom.act(\"post data\", parameters=parameters, name=\"call_api\", assets=[\"notification-api\"])\n\n    return",
                     "data": {
                         "action": "post data",
                         "actionType": "generic",
@@ -116,6 +116,7 @@
                         "id": "4",
                         "parameters": {
                             "body": {
+                                "functionId": 1,
                                 "parameters": [
                                     "artifact:*.cef.destinationUserName",
                                     "artifact:*.cef.deviceCustomString1"
@@ -128,6 +129,7 @@
                                 "template": "{\n\"Content-Type\": \"application/json\",\n\"accept\":\"application/json\"\n}"
                             },
                             "location": {
+                                "functionId": 1,
                                 "parameters": [],
                                 "template": "/alert"
                             }
@@ -312,7 +314,7 @@
         "schema": "5.0.6",
         "version": "5.3.2.88192"
     },
-    "create_time": "2023-06-22T08:51:10.038976+00:00",
+    "create_time": "2023-06-22T08:55:15.871078+00:00",
     "draft_mode": false,
     "labels": [
         "*"

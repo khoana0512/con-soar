@@ -20,10 +20,11 @@ def call_api(action=None, success=None, container=None, results=None, handle=Non
     phantom.debug("call_api() called")
 
     # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
-
+    container_artifact_data_userName = phantom.collect2(container=container, datapath=["artifact:*.cef.destinationUserName","artifact:*.id"])
+    container_artifact_data_host = phantom.collect2(container=container, datapath=["artifact:*.cef.deviceCustomString1","artifact:*.id"])
     body_formatted_string = phantom.format(
         container=container,
-        template="""{\n  \"user\": \"{0}\",\n  \"host\": \"{1}\",\n  \"status\": 0,\n  \"description\": \"string\"\n}""",
+        template="""{\n  \"user\": \"%s\",\n  \"host\": \"%s\",\n  \"status\": 0,\n  \"description\": \"string\"\n}"""%(container_artifact_data_userName[0][0],container_artifact_data_host[0][0]),
         parameters=[
             "artifact:*.cef.destinationUserName",
             "artifact:*.cef.deviceCustomString1"
@@ -60,7 +61,6 @@ def call_api(action=None, success=None, container=None, results=None, handle=Non
     phantom.act("post data", parameters=parameters, name="call_api", assets=["notification-api"])
 
     return
-
 
 def disable_account_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
     phantom.debug("disable_account_1() called")
