@@ -100,7 +100,7 @@ def decision_1(action=None, success=None, container=None, results=None, handle=N
     found_match_1 = phantom.decision(
         container=container,
         conditions=[
-            ["action_result.status", "==", "success"]
+            ["disable_account_1:action_result.status", "==", "success"]
         ])
 
     # call connected blocks if condition 1 matched
