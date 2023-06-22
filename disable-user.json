@@ -19,9 +19,23 @@
                     "sourcePort": "13_out",
                     "targetNode": "1",
                     "targetPort": "1_in"
+                },
+                {
+                    "id": "port_0_to_port_19",
+                    "sourceNode": "0",
+                    "sourcePort": "0_out",
+                    "targetNode": "19",
+                    "targetPort": "19_in"
+                },
+                {
+                    "id": "port_19_to_port_1",
+                    "sourceNode": "19",
+                    "sourcePort": "19_out",
+                    "targetNode": "1",
+                    "targetPort": "1_in"
                 }
             ],
-            "hash": "bd53c294d6f1005f70f68eea14502e1881dba9e3",
+            "hash": "7131ddbcdc6930c581df9a5f47baf69c26501b4d",
             "nodes": {
                 "0": {
                     "data": {
@@ -60,7 +74,7 @@
                         "action": "get data",
                         "actionType": "investigate",
                         "advanced": {
-                            "customName": "Call API Disable User",
+                            "customName": "Call API Send Message MSTeams",
                             "customNameId": 0,
                             "join": []
                         },
@@ -71,7 +85,7 @@
                         "connectorId": "290b7499-0374-4930-9cdc-5e9b05d65827",
                         "connectorVersion": "v1",
                         "functionId": 1,
-                        "functionName": "call_api_disable_user",
+                        "functionName": "call_api_send_message_msteams",
                         "id": "13",
                         "parameters": {
                             "headers": {
@@ -82,9 +96,10 @@
                             "location": {
                                 "functionId": 1,
                                 "parameters": [
+                                    "artifact:*.cef.deviceCustomString1",
                                     "artifact:*.cef.destinationUserName"
                                 ],
-                                "template": "/disable-user/{0}"
+                                "template": "/send-msteam/alert/{0}/{1}"
                             }
                         },
                         "requiredParameters": [
@@ -102,7 +117,58 @@
                     "errors": {},
                     "id": "13",
                     "type": "action",
-                    "x": 1000,
+                    "x": 1180,
+                    "y": 459.99999999999994
+                },
+                "19": {
+                    "data": {
+                        "action": "get data",
+                        "actionType": "investigate",
+                        "advanced": {
+                            "customName": "Auto Disable User",
+                            "customNameId": 0,
+                            "join": []
+                        },
+                        "connector": "HTTP",
+                        "connectorConfigs": [
+                            "notification-api"
+                        ],
+                        "connectorId": "290b7499-0374-4930-9cdc-5e9b05d65827",
+                        "connectorVersion": "v1",
+                        "functionId": 2,
+                        "functionName": "auto_disable_user",
+                        "id": "19",
+                        "parameters": {
+                            "headers": {
+                                "functionId": 2,
+                                "parameters": [],
+                                "template": "{\n\"accept\": \"application/json\"\n}"
+                            },
+                            "location": {
+                                "functionId": 2,
+                                "parameters": [
+                                    "artifact:*.cef.deviceCustomString1",
+                                    "artifact:*.cef.destinationUserName"
+                                ],
+                                "template": "/auto-disable/{0}/{1}"
+                            }
+                        },
+                        "requiredParameters": [
+                            {
+                                "data_type": "string",
+                                "field": "location"
+                            },
+                            {
+                                "data_type": "boolean",
+                                "field": "verify_certificate"
+                            }
+                        ],
+                        "type": "action"
+                    },
+                    "errors": {},
+                    "id": "19",
+                    "type": "action",
+                    "x": 780,
                     "y": 460
                 }
             },
@@ -124,7 +190,7 @@
         "schema": "5.0.6",
         "version": "5.3.2.88192"
     },
-    "create_time": "2023-06-22T11:15:45.161942+00:00",
+    "create_time": "2023-06-22T11:29:21.382422+00:00",
     "draft_mode": false,
     "labels": [
         "*"

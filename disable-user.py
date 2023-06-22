@@ -11,13 +11,15 @@ from datetime import datetime, timedelta
 def on_start(container):
     phantom.debug('on_start() called')
 
-    # call 'call_api_disable_user' block
-    call_api_disable_user(container=container)
+    # call 'call_api_send_message_msteams' block
+    call_api_send_message_msteams(container=container)
+    # call 'auto_disable_user' block
+    auto_disable_user(container=container)
 
     return
 
-def call_api_disable_user(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
-    phantom.debug("call_api_disable_user() called")
+def call_api_send_message_msteams(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
+    phantom.debug("call_api_send_message_msteams() called")
 
     # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
 
@@ -27,8 +29,9 @@ def call_api_disable_user(action=None, success=None, container=None, results=Non
         parameters=[])
     location_formatted_string = phantom.format(
         container=container,
-        template="""/disable-user/{0}""",
+        template="""/send-msteam/alert/{0}/{1}""",
         parameters=[
+            "artifact:*.cef.deviceCustomString1",
             "artifact:*.cef.destinationUserName"
         ])
 
@@ -51,7 +54,48 @@ def call_api_disable_user(action=None, success=None, container=None, results=Non
     ## Custom Code End
     ################################################################################
 
-    phantom.act("get data", parameters=parameters, name="call_api_disable_user", assets=["notification-api"])
+    phantom.act("get data", parameters=parameters, name="call_api_send_message_msteams", assets=["notification-api"])
+
+    return
+
+
+def auto_disable_user(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
+    phantom.debug("auto_disable_user() called")
+
+    # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
+
+    headers_formatted_string = phantom.format(
+        container=container,
+        template="""{\n\"accept\": \"application/json\"\n}""",
+        parameters=[])
+    location_formatted_string = phantom.format(
+        container=container,
+        template="""/auto-disable/{0}/{1}""",
+        parameters=[
+            "artifact:*.cef.deviceCustomString1",
+            "artifact:*.cef.destinationUserName"
+        ])
+
+    parameters = []
+
+    if location_formatted_string is not None:
+        parameters.append({
+            "headers": headers_formatted_string,
+            "location": location_formatted_string,
+            "verify_certificate": False,
+        })
+
+    ################################################################################
+    ## Custom Code Start
+    ################################################################################
+
+    # Write your custom code here...
+
+    ################################################################################
+    ## Custom Code End
+    ################################################################################
+
+    phantom.act("get data", parameters=parameters, name="auto_disable_user", assets=["notification-api"])
 
     return
 
