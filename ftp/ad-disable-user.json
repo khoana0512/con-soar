@@ -21,14 +21,45 @@
                     "targetPort": "5_in"
                 },
                 {
-                    "id": "port_5_to_port_4",
+                    "id": "port_5_to_port_6",
                     "sourceNode": "5",
                     "sourcePort": "5_out",
+                    "targetNode": "6",
+                    "targetPort": "6_in"
+                },
+                {
+                    "conditions": [
+                        {
+                            "index": 0
+                        }
+                    ],
+                    "id": "port_6_to_port_4",
+                    "sourceNode": "6",
+                    "sourcePort": "6_out",
                     "targetNode": "4",
                     "targetPort": "4_in"
+                },
+                {
+                    "conditions": [
+                        {
+                            "index": 1
+                        }
+                    ],
+                    "id": "port_6_to_port_9",
+                    "sourceNode": "6",
+                    "sourcePort": "6_out",
+                    "targetNode": "9",
+                    "targetPort": "9_in"
+                },
+                {
+                    "id": "port_9_to_port_1",
+                    "sourceNode": "9",
+                    "sourcePort": "9_out",
+                    "targetNode": "1",
+                    "targetPort": "1_in"
                 }
             ],
-            "hash": "752997d9036917160948dbb341bf7fad0173d2b1",
+            "hash": "dd634b12fe61e57f7a62e0dcbeb59944e6142863",
             "nodes": {
                 "0": {
                     "data": {
@@ -116,7 +147,7 @@
                     "id": "4",
                     "type": "action",
                     "x": 980,
-                    "y": 700
+                    "y": 740
                 },
                 "5": {
                     "data": {
@@ -152,6 +183,107 @@
                     "type": "action",
                     "x": 980,
                     "y": 560
+                },
+                "6": {
+                    "customCode": "def decision_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug(\"decision_1() called\")\n\n    # check for 'if' condition 1\n    found_match_1 = phantom.decision(\n        container=container,\n        conditions=[\n            [\"action_result.status\", \"==\", \"success\"]\n        ])\n\n    # call connected blocks if condition 1 matched\n    if found_match_1:\n        post_data_1(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # check for 'else' condition 2\n    post_data_2(action=action, success=success, container=container, results=results, handle=handle)\n\n    return",
+                    "data": {
+                        "advanced": {
+                            "join": []
+                        },
+                        "conditions": [
+                            {
+                                "comparisons": [
+                                    {
+                                        "conditionIndex": 0,
+                                        "op": "==",
+                                        "param": "artifact:*.cef.destinationUserPrivileges",
+                                        "value": "artifact:*.cef.act"
+                                    }
+                                ],
+                                "conditionIndex": 0,
+                                "display": "If",
+                                "logic": "and",
+                                "type": "if"
+                            },
+                            {
+                                "comparisons": [
+                                    {
+                                        "conditionIndex": 1,
+                                        "op": "==",
+                                        "param": "",
+                                        "value": ""
+                                    }
+                                ],
+                                "conditionIndex": 1,
+                                "display": "Else",
+                                "logic": "and",
+                                "type": "else"
+                            }
+                        ],
+                        "functionId": 1,
+                        "functionName": "decision_1",
+                        "id": "6",
+                        "type": "decision"
+                    },
+                    "errors": {},
+                    "id": "6",
+                    "type": "decision",
+                    "userCode": null,
+                    "x": 1380,
+                    "y": 600
+                },
+                "9": {
+                    "customCode": "def post_data_2(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug(\"post_data_2() called\")\n\n    # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    container_artifact_data_userName = phantom.collect2(container=container, datapath=[\"artifact:*.cef.destinationUserName\",\"artifact:*.id\"])\n    container_artifact_data_host = phantom.collect2(container=container, datapath=[\"artifact:*.cef.deviceCustomString1\",\"artifact:*.id\"])\n    body_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"{\\n  \\\"user\\\": \\\"False\\\",\\n  \\\"host\\\": \\\"%s\\\",\\n  \\\"status\\\": 0,\\n  \\\"description\\\": \\\"string\\\"\\n}\"\"\"%(container_artifact_data_host[0][0]),\n        parameters=[])\n    headers_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"{\\n\\\"Content-Type\\\": \\\"application/json\\\",\\n\\\"accept\\\":\\\"application/json\\\"\\n}\"\"\",\n        parameters=[])\n    location_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"/alert\"\"\",\n        parameters=[])\n\n    parameters = []\n\n    if body_formatted_string is not None and location_formatted_string is not None:\n        parameters.append({\n            \"body\": body_formatted_string,\n            \"headers\": headers_formatted_string,\n            \"location\": location_formatted_string,\n            \"verify_certificate\": False,\n        })\n\n    ################################################################################\n    ## Custom Code Start\n    ################################################################################\n\n    # Write your custom code here...\n\n    ################################################################################\n    ## Custom Code End\n    ################################################################################\n\n    phantom.act(\"post data\", parameters=parameters, name=\"post_data_2\", assets=[\"notification-api\"])\n\n    return",
+                    "data": {
+                        "action": "post data",
+                        "actionType": "generic",
+                        "advanced": {
+                            "join": []
+                        },
+                        "connector": "HTTP",
+                        "connectorConfigs": [
+                            "notification-api"
+                        ],
+                        "connectorId": "290b7499-0374-4930-9cdc-5e9b05d65827",
+                        "connectorVersion": "v1",
+                        "functionId": 2,
+                        "functionName": "post_data_2",
+                        "id": "9",
+                        "parameters": {
+                            "body": {
+                                "parameters": [],
+                                "template": "{\n  \"user\": \"false\",\n  \"host\": \"DC\",\n  \"status\": 0,\n  \"description\": \"string\"\n}"
+                            },
+                            "headers": {
+                                "parameters": [],
+                                "template": "{\n\"Content-Type\": \"application/json\",\n\"accept\":\"application/json\"\n}"
+                            },
+                            "location": {
+                                "parameters": [],
+                                "template": "/alert"
+                            }
+                        },
+                        "requiredParameters": [
+                            {
+                                "data_type": "string",
+                                "field": "body"
+                            },
+                            {
+                                "data_type": "string",
+                                "field": "location"
+                            },
+                            {
+                                "data_type": "boolean",
+                                "field": "verify_certificate"
+                            }
+                        ],
+                        "type": "action"
+                    },
+                    "errors": {},
+                    "id": "9",
+                    "type": "action",
+                    "x": 1440,
+                    "y": 740
                 }
             },
             "notes": ""
@@ -163,7 +295,7 @@
         "schema": "5.0.6",
         "version": "5.3.2.88192"
     },
-    "create_time": "2023-06-22T07:57:33.818087+00:00",
+    "create_time": "2023-06-22T08:23:52.300381+00:00",
     "draft_mode": false,
     "labels": [
         "*"
