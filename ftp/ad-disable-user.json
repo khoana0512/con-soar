@@ -59,7 +59,7 @@
                     "targetPort": "1_in"
                 }
             ],
-            "hash": "f57e92746971f07b32730be9ac1185e7928a27e7",
+            "hash": "144ff9ab279923062abbe2df80c6f255acfb708a",
             "nodes": {
                 "0": {
                     "data": {
@@ -121,7 +121,7 @@
                                     "artifact:*.cef.deviceCustomString1",
                                     "artifact:*.cef.destinationUserName"
                                 ],
-                                "template": "{\n  \"user\": \"{1}\",\n  \"host\": \"{0}\",\n  \"status\": 0,\n  \"description\": \"string\"\n}\n"
+                                "template": "{\n  \"user\": {1},\n  \"host\": {0},\n  \"status\": 0,\n  \"description\": \"string\"\n}\n"
                             },
                             "headers": {
                                 "functionId": 1,
@@ -305,7 +305,7 @@
         "schema": "5.0.6",
         "version": "5.3.2.88192"
     },
-    "create_time": "2023-06-22T08:35:49.840199+00:00",
+    "create_time": "2023-06-22T08:36:36.012648+00:00",
     "draft_mode": false,
     "labels": [
         "*"

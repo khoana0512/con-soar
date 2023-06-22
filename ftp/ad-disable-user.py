@@ -23,7 +23,7 @@ def call_api(action=None, success=None, container=None, results=None, handle=Non
 
     body_formatted_string = phantom.format(
         container=container,
-        template="""{\n  \"user\": \"{1}\",\n  \"host\": \"{0}\",\n  \"status\": 0,\n  \"description\": \"string\"\n}\n""",
+        template="""{\n  \"user\": {1},\n  \"host\": {0},\n  \"status\": 0,\n  \"description\": \"string\"\n}\n""",
         parameters=[
             "artifact:*.cef.deviceCustomString1",
             "artifact:*.cef.destinationUserName"
