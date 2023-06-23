@@ -158,7 +158,7 @@ def post_data_2(action=None, success=None, container=None, results=None, handle=
     positive = phantom.collect2(container=container, datapath=["get_report_1:action_result.data.*.positives"])
     body_formatted_string = phantom.format(
         container=container,
-        template="""{\n  \"scanId\": \"%s\",\n  \"sender\": \"%s\",\n  \"receiver\": \"%s\",\n  \"url\": \"%s\",\n  \"totalScan\": %d,\n  \"positive\": %d}"""%(scanId[0],sender[0][0],receiver[0][0],url[0][0],total[0][0],positive[0][0]),
+        template="""{\n  \"scanId\": \"%s\",\n  \"sender\": \"%s\",\n  \"receiver\": \"%s\",\n  \"url\": \"%s\",\n  \"totalScan\": %d,\n  \"positive\": %d}"""%(scanId[0][0],sender[0][0],receiver[0][0],url[0][0],total[0][0],positive[0][0]),
         parameters=[])
     headers_formatted_string = phantom.format(
         container=container,
