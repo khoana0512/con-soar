@@ -23,7 +23,7 @@
                 {
                     "conditions": [
                         {
-                            "index": 1
+                            "index": 0
                         }
                     ],
                     "id": "port_4_to_port_3",
@@ -35,7 +35,7 @@
                 {
                     "conditions": [
                         {
-                            "index": 0
+                            "index": 1
                         }
                     ],
                     "id": "port_4_to_port_5",
@@ -59,7 +59,7 @@
                     "targetPort": "1_in"
                 }
             ],
-            "hash": "0164219030a9d37ae9aa26d56ad228c5b7b4d760",
+            "hash": "11b82a1fec8fe1133f165e3005548fc3aae8f4d5",
             "nodes": {
                 "0": {
                     "data": {
@@ -278,7 +278,7 @@
         "schema": "5.0.6",
         "version": "5.3.2.88192"
     },
-    "create_time": "2023-06-23T06:16:23.049507+00:00",
+    "create_time": "2023-06-23T06:17:20.892974+00:00",
     "draft_mode": false,
     "labels": [
         "*"
