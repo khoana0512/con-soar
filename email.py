@@ -57,7 +57,7 @@ def post_data_1(action=None, success=None, container=None, results=None, handle=
     url = phantom.collect2(container=container, datapath=["artifact:*.cef.requestURL","artifact:*.id"])
     body_formatted_string = phantom.format(
         container=container,
-        template="""{\n  \"sender\": \"%s\",\n  \"receiver\": \"%s\",\n  \"url\": \"%s\"\n}"""%(sender,receiver,url),
+        template="""{\n  \"sender\": \"%s\",\n  \"receiver\": \"%s\",\n  \"url\": \"%s\"\n}"""%(sender[0][0],receiver[0][0],url[0][0]),
         parameters=[])
     headers_formatted_string = phantom.format(
         container=container,
