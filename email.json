@@ -66,7 +66,7 @@
                     "targetPort": "1_in"
                 }
             ],
-            "hash": "2b64dcc32967bb104aeb8490eae8c1b018f911e8",
+            "hash": "8967bb03372f47f51e50b6d662cabe58438a4bee",
             "nodes": {
                 "0": {
                     "data": {
@@ -81,7 +81,7 @@
                     "id": "0",
                     "type": "start",
                     "x": 1000,
-                    "y": 419.99999999999943
+                    "y": 419.9999999999992
                 },
                 "1": {
                     "data": {
@@ -278,7 +278,7 @@
                     "y": 780
                 },
                 "6": {
-                    "customCode": "def post_data_2(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug(\"post_data_2() called\")\n\n    # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    scanId = phantom.collect2(container=container, datapath=[\"get_report_1:action_result.parameter.scan_id\",\"artifact:*.id\"])\n    receiver = phantom.collect2(container=container, datapath=[\"artifact:*.cef.destinationUserName\",\"artifact:*.id\"])\n    sender = phantom.collect2(container=container, datapath=[\"artifact:*.cef.sourceUserName\",\"artifact:*.id\"])\n    url = phantom.collect2(container=container, datapath=[\"artifact:*.cef.requestURL\",\"artifact:*.id\"])\n    total = phantom.collect2(container=container, datapath=[\"get_report_1:action_result.data.*.total\",\"artifact:*.id\"])\n    positive = phantom.collect2(container=container, datapath=[\"get_report_1:action_result.data.*.positives\",\"artifact:*.id\"])\n    body_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"{\\n  \\\"scanId\\\": \\\"%s\\\",\\n  \\\"sender\\\": \\\"%s\\\",\\n  \\\"receiver\\\": \\\"%s\\\",\\n  \\\"url\\\": \\\"%s\\\",\\n  \\\"totalScan\\\": %d,\\n  \\\"positive\\\": %d}\"\"\"%(scanId[0][0],sender[0][0],receiver[0][0],url[0][0],total[0][0],positive[0][0]),\n        parameters=[])\n    headers_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"{\\n\\\"accept\\\": \\\"application/json\\\"\\n}\"\"\",\n        parameters=[])\n    location_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"/send-msteam/email-alert/success-scan\"\"\",\n        parameters=[])\n\n    parameters = []\n\n    if body_formatted_string is not None and location_formatted_string is not None:\n        parameters.append({\n            \"body\": body_formatted_string,\n            \"headers\": headers_formatted_string,\n            \"location\": location_formatted_string,\n            \"verify_certificate\": False,\n        })\n\n    ################################################################################\n    ## Custom Code Start\n    ################################################################################\n\n    # Write your custom code here...\n\n    ################################################################################\n    ## Custom Code End\n    ################################################################################\n\n    phantom.act(\"post data\", parameters=parameters, name=\"post_data_2\", assets=[\"notification-api\"])\n\n    return",
+                    "customCode": "def post_data_2(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug(\"post_data_2() called\")\n\n    # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    scanId = phantom.collect2(container=container, datapath=[\"get_report_1:action_result.parameter.scan_id\"])\n    receiver = phantom.collect2(container=container, datapath=[\"artifact:*.cef.destinationUserName\",\"artifact:*.id\"])\n    sender = phantom.collect2(container=container, datapath=[\"artifact:*.cef.sourceUserName\",\"artifact:*.id\"])\n    url = phantom.collect2(container=container, datapath=[\"artifact:*.cef.requestURL\",\"artifact:*.id\"])\n    total = phantom.collect2(container=container, datapath=[\"get_report_1:action_result.data.*.total\"])\n    positive = phantom.collect2(container=container, datapath=[\"get_report_1:action_result.data.*.positives\"])\n    body_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"{\\n  \\\"scanId\\\": \\\"%s\\\",\\n  \\\"sender\\\": \\\"%s\\\",\\n  \\\"receiver\\\": \\\"%s\\\",\\n  \\\"url\\\": \\\"%s\\\",\\n  \\\"totalScan\\\": %d,\\n  \\\"positive\\\": %d}\"\"\"%(scanId[0],sender[0][0],receiver[0][0],url[0][0],total[0],positive[0]),\n        parameters=[])\n    headers_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"{\\n\\\"accept\\\": \\\"application/json\\\"\\n}\"\"\",\n        parameters=[])\n    location_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"/send-msteam/email-alert/success-scan\"\"\",\n        parameters=[])\n\n    parameters = []\n\n    if body_formatted_string is not None and location_formatted_string is not None:\n        parameters.append({\n            \"body\": body_formatted_string,\n            \"headers\": headers_formatted_string,\n            \"location\": location_formatted_string,\n            \"verify_certificate\": False,\n        })\n\n    ################################################################################\n    ## Custom Code Start\n    ################################################################################\n\n    # Write your custom code here...\n\n    ################################################################################\n    ## Custom Code End\n    ################################################################################\n\n    phantom.act(\"post data\", parameters=parameters, name=\"post_data_2\", assets=[\"notification-api\"])\n\n    return",
                     "data": {
                         "action": "post data",
                         "actionType": "generic",
@@ -348,7 +348,7 @@
         "schema": "5.0.6",
         "version": "5.3.2.88192"
     },
-    "create_time": "2023-06-23T07:17:45.645673+00:00",
+    "create_time": "2023-06-23T07:21:50.138569+00:00",
     "draft_mode": false,
     "labels": [
         "*"
