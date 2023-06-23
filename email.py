@@ -118,7 +118,7 @@ def get_report_1(action=None, success=None, container=None, results=None, handle
 
     # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
 
-    scan_url_result_data = phantom.collect2(container=container, datapath=["get_report:action_result.data.*.scan_id","scan_url:action_result.parameter.context.artifact_id"], action_results=results)
+    scan_url_result_data = phantom.collect2(container=container, datapath=["scan_url:action_result.data.*.scan_id","scan_url:action_result.parameter.context.artifact_id"], action_results=results)
 
     parameters = []
 
@@ -144,6 +144,7 @@ def get_report_1(action=None, success=None, container=None, results=None, handle
     phantom.act("get report", parameters=parameters, name="get_report_1", assets=["scan url"], callback=post_data_2)
 
     return
+
 
 def post_data_2(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
     phantom.debug("post_data_2() called")

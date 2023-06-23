@@ -66,7 +66,7 @@
                     "targetPort": "1_in"
                 }
             ],
-            "hash": "03fbdbfe7739f90e21ad7c3f54a87ee5bb9ef705",
+            "hash": "2b64dcc32967bb104aeb8490eae8c1b018f911e8",
             "nodes": {
                 "0": {
                     "data": {
@@ -237,7 +237,7 @@
                     "y": 620
                 },
                 "5": {
-                    "customCode": "def get_report_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug(\"get_report_1() called\")\n\n    # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n\n    scan_url_result_data = phantom.collect2(container=container, datapath=[\"get_report:action_result.data.*.scan_id\",\"scan_url:action_result.parameter.context.artifact_id\"], action_results=results)\n\n    parameters = []\n\n    # build parameters list for 'get_report_1' call\n    for scan_url_result_item in scan_url_result_data:\n        if scan_url_result_item[0] is not None:\n            parameters.append({\n                \"report_type\": \"url\",\n                \"scan_id\": scan_url_result_item[0],\n                \"context\": {'artifact_id': scan_url_result_item[1]},\n            })\n\n    ################################################################################\n    ## Custom Code Start\n    ################################################################################\n\n    # Write your custom code here...\n\n    ################################################################################\n    ## Custom Code End\n    ################################################################################\n\n    phantom.act(\"get report\", parameters=parameters, name=\"get_report_1\", assets=[\"scan url\"], callback=post_data_2)\n\n    return",
+                    "customCode": null,
                     "data": {
                         "action": "get report",
                         "actionType": "investigate",
@@ -273,6 +273,7 @@
                     "errors": {},
                     "id": "5",
                     "type": "action",
+                    "userCode": null,
                     "x": 820,
                     "y": 780
                 },
@@ -347,7 +348,7 @@
         "schema": "5.0.6",
         "version": "5.3.2.88192"
     },
-    "create_time": "2023-06-23T07:15:18.557372+00:00",
+    "create_time": "2023-06-23T07:17:45.645673+00:00",
     "draft_mode": false,
     "labels": [
         "*"
