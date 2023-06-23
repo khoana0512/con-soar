@@ -104,11 +104,11 @@ def decision_1(action=None, success=None, container=None, results=None, handle=N
 
     # call connected blocks if condition 1 matched
     if found_match_1:
-        post_data_1(action=action, success=success, container=container, results=results, handle=handle)
+        get_report_1(action=action, success=success, container=container, results=results, handle=handle)
         return
 
     # check for 'else' condition 2
-    get_report_1(action=action, success=success, container=container, results=results, handle=handle)
+    post_data_1(action=action, success=success, container=container, results=results, handle=handle)
 
     return
 
@@ -141,7 +141,50 @@ def get_report_1(action=None, success=None, container=None, results=None, handle
     ## Custom Code End
     ################################################################################
 
-    phantom.act("get report", parameters=parameters, name="get_report_1", assets=["scan url"])
+    phantom.act("get report", parameters=parameters, name="get_report_1", assets=["scan url"], callback=post_data_2)
+
+    return
+
+
+def post_data_2(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
+    phantom.debug("post_data_2() called")
+
+    # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
+
+    body_formatted_string = phantom.format(
+        container=container,
+        template="""{\n  \"scanId\": \"string\",\n  \"sender\": \"string\",\n  \"receiver\": \"string\",\n  \"url\": \"string\",\n  \"totalScan\": 0,\n  \"positive\": 0\n}""",
+        parameters=[])
+    headers_formatted_string = phantom.format(
+        container=container,
+        template="""{\n\"accept\": \"application/json\"\n}""",
+        parameters=[])
+    location_formatted_string = phantom.format(
+        container=container,
+        template="""/send-msteam/email-alert/success-scan""",
+        parameters=[])
+
+    parameters = []
+
+    if body_formatted_string is not None and location_formatted_string is not None:
+        parameters.append({
+            "body": body_formatted_string,
+            "headers": headers_formatted_string,
+            "location": location_formatted_string,
+            "verify_certificate": False,
+        })
+
+    ################################################################################
+    ## Custom Code Start
+    ################################################################################
+
+    # Write your custom code here...
+
+    ################################################################################
+    ## Custom Code End
+    ################################################################################
+
+    phantom.act("post data", parameters=parameters, name="post_data_2", assets=["notification-api"])
 
     return
 
