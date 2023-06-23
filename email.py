@@ -118,7 +118,7 @@ def get_report_1(action=None, success=None, container=None, results=None, handle
 
     # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
 
-    scan_url_result_data = phantom.collect2(container=container, datapath=["scan_url:action_result.data.*.scan_id","scan_url:action_result.parameter.context.artifact_id"], action_results=results)
+    scan_url_result_data = phantom.collect2(container=container, datapath=["get_report:action_result.data.*.scan_id","scan_url:action_result.parameter.context.artifact_id"], action_results=results)
 
     parameters = []
 
@@ -145,15 +145,19 @@ def get_report_1(action=None, success=None, container=None, results=None, handle
 
     return
 
-
 def post_data_2(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
     phantom.debug("post_data_2() called")
 
     # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
-
+    scanId = phantom.collect2(container=container, datapath=["get_report_1:action_result.parameter.scan_id","artifact:*.id"])
+    receiver = phantom.collect2(container=container, datapath=["artifact:*.cef.destinationUserName","artifact:*.id"])
+    sender = phantom.collect2(container=container, datapath=["artifact:*.cef.sourceUserName","artifact:*.id"])
+    url = phantom.collect2(container=container, datapath=["artifact:*.cef.requestURL","artifact:*.id"])
+    total = phantom.collect2(container=container, datapath=["get_report_1:action_result.data.*.total","artifact:*.id"])
+    positive = phantom.collect2(container=container, datapath=["get_report_1:action_result.data.*.positives","artifact:*.id"])
     body_formatted_string = phantom.format(
         container=container,
-        template="""{\n  \"scanId\": \"string\",\n  \"sender\": \"string\",\n  \"receiver\": \"string\",\n  \"url\": \"string\",\n  \"totalScan\": 0,\n  \"positive\": 0\n}""",
+        template="""{\n  \"scanId\": \"%s\",\n  \"sender\": \"%s\",\n  \"receiver\": \"%s\",\n  \"url\": \"%s\",\n  \"totalScan\": %d,\n  \"positive\": %d}"""%(scanId[0][0],sender[0][0],receiver[0][0],url[0][0],total[0][0],positive[0][0]),
         parameters=[])
     headers_formatted_string = phantom.format(
         container=container,
@@ -187,7 +191,6 @@ def post_data_2(action=None, success=None, container=None, results=None, handle=
     phantom.act("post data", parameters=parameters, name="post_data_2", assets=["notification-api"])
 
     return
-
 
 def on_finish(container, summary):
     phantom.debug("on_finish() called")
