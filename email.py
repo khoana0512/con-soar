@@ -52,10 +52,12 @@ def post_data_1(action=None, success=None, container=None, results=None, handle=
     phantom.debug("post_data_1() called")
 
     # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
-
+    receiver = phantom.collect2(container=container, datapath=["artifact:*.cef.destinationUserName","artifact:*.id"])
+    sender = phantom.collect2(container=container, datapath=["artifact:*.cef.sourceUserName","artifact:*.id"])
+    url = phantom.collect2(container=container, datapath=["artifact:*.cef.requestURL","artifact:*.id"])
     body_formatted_string = phantom.format(
         container=container,
-        template="""{\n  \"sender\": \"string\",\n  \"receiver\": \"string\",\n  \"url\": \"string\"\n}""",
+        template="""{\n  \"sender\": \"%s\",\n  \"receiver\": \"%s\",\n  \"url\": \"%s\"\n}"""%(sender,receiver,url),
         parameters=[])
     headers_formatted_string = phantom.format(
         container=container,
@@ -90,11 +92,56 @@ def post_data_1(action=None, success=None, container=None, results=None, handle=
 
     return
 
-
 def decision_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
     phantom.debug("decision_1() called")
 
+    # check for 'if' condition 1
+    found_match_1 = phantom.decision(
+        container=container,
+        conditions=[
+            ["scan_url:action_result.status", "==", "success"]
+        ])
 
+    # call connected blocks if condition 1 matched
+    if found_match_1:
+        get_report_1(action=action, success=success, container=container, results=results, handle=handle)
+        return
+
+    # check for 'else' condition 2
+    post_data_1(action=action, success=success, container=container, results=results, handle=handle)
+
+    return
+
+
+def get_report_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
+    phantom.debug("get_report_1() called")
+
+    # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
+
+    scan_url_result_data = phantom.collect2(container=container, datapath=["scan_url:action_result.data.*.scan_id","scan_url:action_result.parameter.context.artifact_id"], action_results=results)
+
+    parameters = []
+
+    # build parameters list for 'get_report_1' call
+    for scan_url_result_item in scan_url_result_data:
+        if scan_url_result_item[0] is not None:
+            parameters.append({
+                "report_type": "url",
+                "scan_id": scan_url_result_item[0],
+                "context": {'artifact_id': scan_url_result_item[1]},
+            })
+
+    ################################################################################
+    ## Custom Code Start
+    ################################################################################
+
+    # Write your custom code here...
+
+    ################################################################################
+    ## Custom Code End
+    ################################################################################
+
+    phantom.act("get report", parameters=parameters, name="get_report_1", assets=["scan url"])
 
     return
 
