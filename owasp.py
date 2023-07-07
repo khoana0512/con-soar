@@ -26,12 +26,12 @@ def post_data_1(action=None, success=None, container=None, results=None, handle=
     description:str
     time: str
     atkUri:str
-    severity = phantom.collect2(container=container, datapath=["artifact:*.cef.deviceCustomString1","artifact:*.id"])
+    severity = phantom.collect2(container=container, datapath=["artifact:*.cef.severity","artifact:*.id"])
     clientIp = phantom.collect2(container=container, datapath=["artifact:*.cef.sourceAddress","artifact:*.id"])
     desIp = phantom.collect2(container=container, datapath=["artifact:*.cef.destinationAddress","artifact:*.id"])
-    description = phantom.collect2(container=container, datapath=["artifact:*.cef.deviceCustomString3","artifact:*.id"])
+    description = phantom.collect2(container=container, datapath=["artifact:*.cef.attackType","artifact:*.id"])
     time = phantom.collect2(container=container, datapath=["artifact:*.cef.startTime","artifact:*.id"])
-    atkUri = phantom.collect2(container=container, datapath=["artifact:*.cef.deviceCustomString2","artifact:*.id"])
+    atkUri = phantom.collect2(container=container, datapath=["artifact:*.cef.atkUri","artifact:*.id"])
     location_formatted_string = phantom.format(
         container=container,
         template="""/send-msteam/owasp-alert""",
