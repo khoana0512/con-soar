@@ -5,8 +5,23 @@
     "coa": {
         "data": {
             "description": "",
-            "edges": [],
-            "hash": "80396060b6d39be6cbe8747fc38c706d47a8df9d",
+            "edges": [
+                {
+                    "id": "port_0_to_port_2",
+                    "sourceNode": "0",
+                    "sourcePort": "0_out",
+                    "targetNode": "2",
+                    "targetPort": "2_in"
+                },
+                {
+                    "id": "port_2_to_port_1",
+                    "sourceNode": "2",
+                    "sourcePort": "2_out",
+                    "targetNode": "1",
+                    "targetPort": "1_in"
+                }
+            ],
+            "hash": "c7140499b9e8d463a4bf0307e5df1867eb09bd84",
             "nodes": {
                 "0": {
                     "data": {
@@ -38,9 +53,10 @@
                     "type": "end",
                     "userCode": "\n    # This function is called after all actions are completed.\n    # summary of all the action and/or all details of actions\n    # can be collected here.\n\n    # summary_json = phantom.get_summary()\n    # if 'result' in summary_json:\n        # for action_result in summary_json['result']:\n            # if 'action_run_id' in action_result:\n                # action_results = phantom.get_action_results(action_run_id=action_result['action_run_id'], result_data=False, flatten=False)\n                # phantom.debug(action_results)\n\n",
                     "x": 1000,
-                    "y": 1000
+                    "y": 660
                 },
                 "2": {
+                    "customCode": "def post_data_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug(\"post_data_1() called\")\n\n    # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    severity: str\n    clientIp: str\n    desIp:str\n    description:str\n    time: str\n    atkUri:str\n    severity = phantom.collect2(container=container, datapath=[\"artifact:*.cef.deviceCustomString1\",\"artifact:*.id\"])\n    clientIp = phantom.collect2(container=container, datapath=[\"artifact:*.cef.sourceAddress\",\"artifact:*.id\"])\n    desIp = phantom.collect2(container=container, datapath=[\"artifact:*.cef.destinationAddress\",\"artifact:*.id\"])\n    description = phantom.collect2(container=container, datapath=[\"artifact:*.cef.deviceCustomString3\",\"artifact:*.id\"])\n    time = phantom.collect2(container=container, datapath=[\"artifact:*.cef.startTime\",\"artifact:*.id\"])\n    atkUri = phantom.collect2(container=container, datapath=[\"artifact:*.cef.deviceCustomString2\",\"artifact:*.id\"])\n    location_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"/send-msteam/owasp-alert\"\"\",\n        parameters=[])\n    headers_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"{\\n\\\"accept\\\": \\\"application/json\\\"\\n}\"\"\",\n        parameters=[])\n    body_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"{\\n  \\\"severity\\\": \\\"%s\\\",\\n  \\\"clientIp\\\": \\\"%s\\\",\\n  \\\"desIp\\\": \\\"%s\\\",\\n  \\\"description\\\": \\\"%s\\\",\\n  \\\"time\\\": \\\"%s\\\",\\n  \\\"atkUri\\\": \\\"%s\\\"\\n}\"\"\"%(severity[0][0],clientIp[0][0],desIp[0][0],description[0][0],time[0][0],atkUri[0][0]),\n        parameters=[])\n\n    parameters = []\n\n    if location_formatted_string is not None and body_formatted_string is not None:\n        parameters.append({\n            \"location\": location_formatted_string,\n            \"headers\": headers_formatted_string,\n            \"body\": body_formatted_string,\n            \"verify_certificate\": False,\n        })\n\n    ################################################################################\n    ## Custom Code Start\n    ################################################################################\n\n    # Write your custom code here...\n\n    ################################################################################\n    ## Custom Code End\n    ################################################################################\n\n    phantom.act(\"post data\", parameters=parameters, name=\"post_data_1\", assets=[\"notification-api\"])\n\n    return",
                     "data": {
                         "action": "post data",
                         "actionType": "generic",
@@ -56,7 +72,23 @@
                         "functionId": 1,
                         "functionName": "post_data_1",
                         "id": "2",
-                        "parameters": {},
+                        "parameters": {
+                            "body": {
+                                "functionId": 1,
+                                "parameters": [],
+                                "template": "{\n  \"severity\": \"string\",\n  \"clientIp\": \"string\",\n  \"desIp\": \"string\",\n  \"description\": \"string\",\n  \"time\": \"string\",\n  \"atkUri\": \"string\"\n}"
+                            },
+                            "headers": {
+                                "functionId": 1,
+                                "parameters": [],
+                                "template": "{\n\"accept\": \"application/json\"\n}"
+                            },
+                            "location": {
+                                "functionId": 1,
+                                "parameters": [],
+                                "template": "/send-msteam/owasp-alert"
+                            }
+                        },
                         "requiredParameters": [
                             {
                                 "data_type": "string",
@@ -77,7 +109,7 @@
                     "id": "2",
                     "type": "action",
                     "x": 980,
-                    "y": 560
+                    "y": 520
                 }
             },
             "notes": ""
@@ -89,7 +121,7 @@
         "schema": "5.0.6",
         "version": "5.3.2.88192"
     },
-    "create_time": "2023-07-06T22:58:58.358131+00:00",
+    "create_time": "2023-07-07T08:38:55.017896+00:00",
     "draft_mode": false,
     "labels": [
         "*"

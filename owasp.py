@@ -11,7 +11,8 @@ from datetime import datetime, timedelta
 def on_start(container):
     phantom.debug('on_start() called')
 
-
+    # call 'post_data_1' block
+    post_data_1(container=container)
 
     return
 
@@ -19,14 +20,40 @@ def post_data_1(action=None, success=None, container=None, results=None, handle=
     phantom.debug("post_data_1() called")
 
     # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
+    severity: str
+    clientIp: str
+    desIp:str
+    description:str
+    time: str
+    atkUri:str
+    severity = phantom.collect2(container=container, datapath=["artifact:*.cef.deviceCustomString1","artifact:*.id"])
+    clientIp = phantom.collect2(container=container, datapath=["artifact:*.cef.sourceAddress","artifact:*.id"])
+    desIp = phantom.collect2(container=container, datapath=["artifact:*.cef.destinationAddress","artifact:*.id"])
+    description = phantom.collect2(container=container, datapath=["artifact:*.cef.deviceCustomString3","artifact:*.id"])
+    time = phantom.collect2(container=container, datapath=["artifact:*.cef.startTime","artifact:*.id"])
+    atkUri = phantom.collect2(container=container, datapath=["artifact:*.cef.deviceCustomString2","artifact:*.id"])
+    location_formatted_string = phantom.format(
+        container=container,
+        template="""/send-msteam/owasp-alert""",
+        parameters=[])
+    headers_formatted_string = phantom.format(
+        container=container,
+        template="""{\n\"accept\": \"application/json\"\n}""",
+        parameters=[])
+    body_formatted_string = phantom.format(
+        container=container,
+        template="""{\n  \"severity\": \"%s\",\n  \"clientIp\": \"%s\",\n  \"desIp\": \"%s\",\n  \"description\": \"%s\",\n  \"time\": \"%s\",\n  \"atkUri\": \"%s\"\n}"""%(severity[0][0],clientIp[0][0],desIp[0][0],description[0][0],time[0][0],atkUri[0][0]),
+        parameters=[])
 
     parameters = []
 
-    parameters.append({
-        "body": "",
-        "location": "",
-        "verify_certificate": False,
-    })
+    if location_formatted_string is not None and body_formatted_string is not None:
+        parameters.append({
+            "location": location_formatted_string,
+            "headers": headers_formatted_string,
+            "body": body_formatted_string,
+            "verify_certificate": False,
+        })
 
     ################################################################################
     ## Custom Code Start
@@ -41,7 +68,6 @@ def post_data_1(action=None, success=None, container=None, results=None, handle=
     phantom.act("post data", parameters=parameters, name="post_data_1", assets=["notification-api"])
 
     return
-
 
 def on_finish(container, summary):
     phantom.debug("on_finish() called")
