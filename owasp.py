@@ -20,12 +20,7 @@ def post_data_1(action=None, success=None, container=None, results=None, handle=
     phantom.debug("post_data_1() called")
 
     # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
-    severity: str
-    clientIp: str
-    desIp:str
-    description:str
-    time: str
-    atkUri:str
+    
     severity = phantom.collect2(container=container, datapath=["artifact:*.cef.severity","artifact:*.id"])
     clientIp = phantom.collect2(container=container, datapath=["artifact:*.cef.sourceAddress","artifact:*.id"])
     desIp = phantom.collect2(container=container, datapath=["artifact:*.cef.destinationAddress","artifact:*.id"])

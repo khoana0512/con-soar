@@ -21,7 +21,7 @@
                     "targetPort": "1_in"
                 }
             ],
-            "hash": "9376298c980a7b12fdda53c84e06a1aba3dc68c3",
+            "hash": "5261bab5748b1d60cab385cc7e7f752bdfe111c4",
             "nodes": {
                 "0": {
                     "data": {
@@ -36,7 +36,7 @@
                     "id": "0",
                     "type": "start",
                     "x": 1000,
-                    "y": 419.99999999999966
+                    "y": 419.99999999999955
                 },
                 "1": {
                     "data": {
@@ -56,7 +56,7 @@
                     "y": 660
                 },
                 "2": {
-                    "customCode": "def post_data_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug(\"post_data_1() called\")\n\n    # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    severity: str\n    clientIp: str\n    desIp:str\n    description:str\n    time: str\n    atkUri:str\n    severity = phantom.collect2(container=container, datapath=[\"artifact:*.cef.severity\",\"artifact:*.id\"])\n    clientIp = phantom.collect2(container=container, datapath=[\"artifact:*.cef.sourceAddress\",\"artifact:*.id\"])\n    desIp = phantom.collect2(container=container, datapath=[\"artifact:*.cef.destinationAddress\",\"artifact:*.id\"])\n    description = phantom.collect2(container=container, datapath=[\"artifact:*.cef.attackType\",\"artifact:*.id\"])\n    time = phantom.collect2(container=container, datapath=[\"artifact:*.cef.startTime\",\"artifact:*.id\"])\n    atkUri = phantom.collect2(container=container, datapath=[\"artifact:*.cef.atkUri\",\"artifact:*.id\"])\n    location_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"/send-msteam/owasp-alert\"\"\",\n        parameters=[])\n    headers_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"{\\n\\\"accept\\\": \\\"application/json\\\"\\n}\"\"\",\n        parameters=[])\n    body_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"{\\n  \\\"severity\\\": \\\"%s\\\",\\n  \\\"clientIp\\\": \\\"%s\\\",\\n  \\\"desIp\\\": \\\"%s\\\",\\n  \\\"description\\\": \\\"%s\\\",\\n  \\\"time\\\": \\\"%s\\\",\\n  \\\"atkUri\\\": \\\"%s\\\"\\n}\"\"\"%(severity[0][0],clientIp[0][0],desIp[0][0],description[0][0],time[0][0],atkUri[0][0]),\n        parameters=[])\n\n    parameters = []\n\n    if location_formatted_string is not None and body_formatted_string is not None:\n        parameters.append({\n            \"location\": location_formatted_string,\n            \"headers\": headers_formatted_string,\n            \"body\": body_formatted_string,\n            \"verify_certificate\": False,\n        })\n\n    ################################################################################\n    ## Custom Code Start\n    ################################################################################\n\n    # Write your custom code here...\n\n    ################################################################################\n    ## Custom Code End\n    ################################################################################\n\n    phantom.act(\"post data\", parameters=parameters, name=\"post_data_1\", assets=[\"notification-api\"])\n\n    return",
+                    "customCode": "def post_data_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug(\"post_data_1() called\")\n\n    # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    severity = phantom.collect2(container=container, datapath=[\"artifact:*.cef.severity\",\"artifact:*.id\"])\n    clientIp = phantom.collect2(container=container, datapath=[\"artifact:*.cef.sourceAddress\",\"artifact:*.id\"])\n    desIp = phantom.collect2(container=container, datapath=[\"artifact:*.cef.destinationAddress\",\"artifact:*.id\"])\n    description = phantom.collect2(container=container, datapath=[\"artifact:*.cef.attackType\",\"artifact:*.id\"])\n    time = phantom.collect2(container=container, datapath=[\"artifact:*.cef.startTime\",\"artifact:*.id\"])\n    atkUri = phantom.collect2(container=container, datapath=[\"artifact:*.cef.atkUri\",\"artifact:*.id\"])\n    location_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"/send-msteam/owasp-alert\"\"\",\n        parameters=[])\n    headers_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"{\\n\\\"accept\\\": \\\"application/json\\\"\\n}\"\"\",\n        parameters=[])\n    body_formatted_string = phantom.format(\n        container=container,\n        template=\"\"\"{\\n  \\\"severity\\\": \\\"%s\\\",\\n  \\\"clientIp\\\": \\\"%s\\\",\\n  \\\"desIp\\\": \\\"%s\\\",\\n  \\\"description\\\": \\\"%s\\\",\\n  \\\"time\\\": \\\"%s\\\",\\n  \\\"atkUri\\\": \\\"%s\\\"\\n}\"\"\"%(severity[0][0],clientIp[0][0],desIp[0][0],description[0][0],time[0][0],atkUri[0][0]),\n        parameters=[])\n\n    parameters = []\n\n    if location_formatted_string is not None and body_formatted_string is not None:\n        parameters.append({\n            \"location\": location_formatted_string,\n            \"headers\": headers_formatted_string,\n            \"body\": body_formatted_string,\n            \"verify_certificate\": False,\n        })\n\n    ################################################################################\n    ## Custom Code Start\n    ################################################################################\n\n    # Write your custom code here...\n\n    ################################################################################\n    ## Custom Code End\n    ################################################################################\n\n    phantom.act(\"post data\", parameters=parameters, name=\"post_data_1\", assets=[\"notification-api\"])\n\n    return",
                     "data": {
                         "action": "post data",
                         "actionType": "generic",
@@ -121,7 +121,7 @@
         "schema": "5.0.6",
         "version": "5.3.2.88192"
     },
-    "create_time": "2023-07-07T09:43:51.977791+00:00",
+    "create_time": "2023-07-07T19:11:40.660762+00:00",
     "draft_mode": false,
     "labels": [
         "*"
