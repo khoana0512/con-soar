@@ -23,8 +23,12 @@ def post_data_1(action=None, success=None, container=None, results=None, handle=
     
     severity = phantom.collect2(container=container, datapath=["artifact:*.cef.severity","artifact:*.id"])
     clientIp = phantom.collect2(container=container, datapath=["artifact:*.cef.sourceAddress","artifact:*.id"])
+    clientPort = phantom.collect2(container=container, datapath=["artifact:*.cef.srcPort","artifact:*.id"])
     desIp = phantom.collect2(container=container, datapath=["artifact:*.cef.destinationAddress","artifact:*.id"])
+    desPort = phantom.collect2(container=container, datapath=["artifact:*.cef.desPort","artifact:*.id"])
+    method = phantom.collect2(container=container, datapath=["artifact:*.cef.method","artifact:*.id"])
     description = phantom.collect2(container=container, datapath=["artifact:*.cef.attackType","artifact:*.id"])
+    description2 = phantom.collect2(container=container, datapath=["artifact:*.cef.description","artifact:*.id"])
     time = phantom.collect2(container=container, datapath=["artifact:*.cef.startTime","artifact:*.id"])
     atkUri = phantom.collect2(container=container, datapath=["artifact:*.cef.atkUri","artifact:*.id"])
     location_formatted_string = phantom.format(
@@ -37,7 +41,7 @@ def post_data_1(action=None, success=None, container=None, results=None, handle=
         parameters=[])
     body_formatted_string = phantom.format(
         container=container,
-        template="""{\n  \"severity\": \"%s\",\n  \"clientIp\": \"%s\",\n  \"desIp\": \"%s\",\n  \"description\": \"%s\",\n  \"time\": \"%s\",\n  \"atkUri\": \"%s\"\n}"""%(severity[0][0],clientIp[0][0],desIp[0][0],description[0][0],time[0][0],atkUri[0][0]),
+        template="""{\n  \"severity\": \"%s\",\n  \"clientIp\": \"%s\",\n  \"clientPort\": \"%s\",\n  \"desIp\": \"%s\",\n  \"desPort\": \"%s\",\n  \"method\": \"%s\",\n  \"description\": \"%s\",\n  \"description2\": \"%s\",\n  \"time\": \"%s\",\n  \"atkUri\": \"%s\"\n}"""%(severity[0][0],clientIp[0][0],clientPort[0][0],desIp[0][0],desPort[0][0],method[0][0],description[0][0],description2[0][0],time[0][0],atkUri[0][0]),
         parameters=[])
 
     parameters = []
