@@ -18,11 +18,7 @@ def on_start(container):
 
 def post_data_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
     phantom.debug("post_data_1() called")
-    clientIp: str
-    clientPort: str
-    desIp:str
-    desPort:str
-    description:str
+    
     # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
     clientIp = phantom.collect2(container=container, datapath=["artifact:*.cef.srcIp","artifact:*.id"])
     clientPort = phantom.collect2(container=container, datapath=["artifact:*.cef.srcPort","artifact:*.id"])
