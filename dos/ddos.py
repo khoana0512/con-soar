@@ -18,7 +18,7 @@ def on_start(container):
 
 def post_data_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
     phantom.debug("post_data_1() called")
-    
+
     # phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
     clientIp = phantom.collect2(container=container, datapath=["artifact:*.cef.srcIp","artifact:*.id"])
     clientPort = phantom.collect2(container=container, datapath=["artifact:*.cef.srcPort","artifact:*.id"])
@@ -29,9 +29,7 @@ def post_data_1(action=None, success=None, container=None, results=None, handle=
     body_formatted_string = phantom.format(
         container=container,
         template="""{\n  \"clientIp\": \"%s\",\n  \"clientPort\": \"%s\",\n  \"desIp\": \"%s\",\n  \"desPort\": \"%s\",\n  \"description\": \"%s\"\n}"""%(clientIp[0][0],clientPort[0][0],desIp[0][0],desPort[0][0],description[0][0]),
-        parameters=[
-            ""
-        ])
+        parameters=[])
     headers_formatted_string = phantom.format(
         container=container,
         template="""{\n\"accept\": \"application/json\"\n}""",
@@ -39,9 +37,7 @@ def post_data_1(action=None, success=None, container=None, results=None, handle=
     location_formatted_string = phantom.format(
         container=container,
         template="""/send-msteam/firewall-alert""",
-        parameters=[
-            ""
-        ])
+        parameters=[])
 
     parameters = []
 
