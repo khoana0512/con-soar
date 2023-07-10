@@ -24,7 +24,7 @@ def post_data_1(action=None, success=None, container=None, results=None, handle=
     clientPort = phantom.collect2(container=container, datapath=["artifact:*.cef.srcPort","artifact:*.id"])
     desIp = phantom.collect2(container=container, datapath=["artifact:*.cef.desIp","artifact:*.id"])
     desPort = phantom.collect2(container=container, datapath=["artifact:*.cef.desPort","artifact:*.id"])
-    description = phantom.collect2(container=container, datapath=["artifact:*.cef.Description","artifact:*.id"])
+    description = phantom.collect2(container=container, datapath=["artifact:*.cef.description","artifact:*.id"])
     
     body_formatted_string = phantom.format(
         container=container,
