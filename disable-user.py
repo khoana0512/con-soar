@@ -29,7 +29,7 @@ def call_api_send_message_msteams(action=None, success=None, container=None, res
         parameters=[])
     location_formatted_string = phantom.format(
         container=container,
-        template="""/send-msteam/alert/{0}/{1}""",
+        template="""/send-msteam/login-fail-alert/{0}/{1}""",
         parameters=[
             "artifact:*.cef.ad_host",
             "artifact:*.cef.destinationUserName"
