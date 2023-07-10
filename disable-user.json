@@ -35,7 +35,7 @@
                     "targetPort": "1_in"
                 }
             ],
-            "hash": "7131ddbcdc6930c581df9a5f47baf69c26501b4d",
+            "hash": "68b27789f867f57d12ae22da52cf2e4c4133ed5d",
             "nodes": {
                 "0": {
                     "data": {
@@ -50,7 +50,7 @@
                     "id": "0",
                     "type": "start",
                     "x": 1020,
-                    "y": 340
+                    "y": 339.9999999999999
                 },
                 "1": {
                     "data": {
@@ -96,7 +96,7 @@
                             "location": {
                                 "functionId": 1,
                                 "parameters": [
-                                    "artifact:*.cef.deviceCustomString1",
+                                    "artifact:*.cef.ad_host",
                                     "artifact:*.cef.destinationUserName"
                                 ],
                                 "template": "/send-msteam/alert/{0}/{1}"
@@ -147,7 +147,7 @@
                             "location": {
                                 "functionId": 2,
                                 "parameters": [
-                                    "artifact:*.cef.deviceCustomString1",
+                                    "artifact:*.cef.ad_host",
                                     "artifact:*.cef.destinationUserName"
                                 ],
                                 "template": "/auto-disable/{0}/{1}"
@@ -190,7 +190,7 @@
         "schema": "5.0.6",
         "version": "5.3.2.88192"
     },
-    "create_time": "2023-06-22T11:29:21.382422+00:00",
+    "create_time": "2023-07-10T12:38:55.528883+00:00",
     "draft_mode": false,
     "labels": [
         "*"

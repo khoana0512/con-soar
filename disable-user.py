@@ -31,7 +31,7 @@ def call_api_send_message_msteams(action=None, success=None, container=None, res
         container=container,
         template="""/send-msteam/alert/{0}/{1}""",
         parameters=[
-            "artifact:*.cef.deviceCustomString1",
+            "artifact:*.cef.ad_host",
             "artifact:*.cef.destinationUserName"
         ])
 
@@ -72,7 +72,7 @@ def auto_disable_user(action=None, success=None, container=None, results=None, h
         container=container,
         template="""/auto-disable/{0}/{1}""",
         parameters=[
-            "artifact:*.cef.deviceCustomString1",
+            "artifact:*.cef.ad_host",
             "artifact:*.cef.destinationUserName"
         ])
 
